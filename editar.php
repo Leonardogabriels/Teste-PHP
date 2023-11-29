@@ -18,11 +18,13 @@ if ($id) {
 } else {
     header("Location: index.php");
     exit;
-} 
+}
 ?>
 
 <h1>Editar Usuário</h1><br />
 <form method="POST" action="editar_action.php">
+    <input type="hidden" name="id" value="<?= $info['id'] ?>" />
+
     <label>
         nome:<br />
         <input type="text" name="name" value="<?= $info['nome'] ?>" />
