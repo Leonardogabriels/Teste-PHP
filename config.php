@@ -5,6 +5,6 @@ $user ="root";
 $password = "";
 
 
-$pdo = new PDO("mysql:dbname=test;host=localhost", "root", "");
+$pdo = new PDO("mysql:dbname=test;host=localhost", "root",);
 
 
