@@ -90,7 +90,7 @@ class UsuarioDaoMysql implements UsuarioDaoRepository {
         }
 
     }
-    public function update(Usuario $userNew){
+    public function update(Usuario $userNew) {
 
         $statement = $this->pdo->prepare("UPDATE usuarios SET nome =:nome, email = :email");
         $statement->bindValue(':nome', $userNew->getNome());
@@ -102,6 +102,12 @@ class UsuarioDaoMysql implements UsuarioDaoRepository {
 
     }
     public function delete($id){
+
+        $statement = $this->pdo->prepare("DELETE FROM usuarios WHERE id = :id");
+        $statement->bindValue(':id', $id);
+        $statement->execute();
+
+        return true;
 
     }
 }
