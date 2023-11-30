@@ -1,7 +1,7 @@
 <?php
-
 require 'config.php';
 require 'dao/UsuarioDaoMysql.php';
+require 'models/Usuario.php';
 
 $usuarioDao = new UsuarioDaoMysql($pdo);
 $lista = $usuarioDao->findAll();
@@ -18,14 +18,14 @@ $lista = $usuarioDao->findAll();
         <th>EMAIL</th>
         <th>AÇÕES</th>
     </tr>
-    <?php foreach ($lista as $usuario) : ?>
+    <?php foreach ($lista as $usuarios) : ?>
         <tr>
-            <td><?= $usuario->getId(); ?></td>
-            <td><?= $usuario->getNome(); ?></td>
-            <td><?= $usuario->getEmail(); ?></td>
+            <td><?= $usuarios->getId(); ?></td>
+            <td><?= $usuarios->getNome(); ?></td>
+            <td><?= $usuarios->getEmail(); ?></td>
             <td>
-                <a href="editar.php?id=<?= $usuario->getId(); ?>">[ Editar ]</a>
-                <a href="excluir.php?id=<?= $usuario->getId(); ?>" onclick="return confirm('tem certeza que deseja excluir ?')">[ Excluir ]</a>
+                <a href="editar.php?id=<?= $usuarios->getId(); ?>">[ Editar ]</a>
+                <a href="excluir.php?id=<?= $usuarios->getId(); ?>" onclick="return confirm('tem certeza que deseja excluir ?')">[ Excluir ]</a>
             </td>
         </tr>
     <?php endforeach; ?>

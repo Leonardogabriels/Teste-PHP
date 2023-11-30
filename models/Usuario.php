@@ -6,6 +6,9 @@ class Usuario{
     private string $nome;
     private string $email;
 
+    public function __construct(){
+        
+    }
     public function getId(){
         return $this->id;
     }

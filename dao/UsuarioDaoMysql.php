@@ -6,7 +6,7 @@ require  '../config.php';
 class UsuarioDaoMysql implements UsuarioDaoRepository {
 
     private $pdo;
-    private $usuario;
+   
 
     public function __construct(PDO $driver){
 
@@ -15,6 +15,16 @@ class UsuarioDaoMysql implements UsuarioDaoRepository {
     }
 
     public function create(Usuario $user){
+
+        $statement = $this->pdo->prepare("INSERT INTO usuarios (nome,email) VALUES (:nome, :email) ");
+        $statement->bindValue(':nome', $user->getNome());
+        $statement->bindValue(':email', $user->getEmail());
+        $statement->execute();
+
+        $user ->setId(($this->pdo->lastInsertId()));
+        return $user;
+
+
 
     }
     public function findAll(): array{
@@ -39,6 +49,25 @@ class UsuarioDaoMysql implements UsuarioDaoRepository {
 
     }
     public function findById($id){
+
+    }
+    public function findByEmail($email) {
+        $statment = $this->pdo->prepare("INSERT INTO usuarios (nome,email) VALUES (:nome, :email)");
+        $statment->bindValue(':email', $email);
+        $statment->execute();
+
+        if($statment->rowCount() >0 ){
+            $data = $statment->fetch();
+
+            $user = new Usuario();
+            $user->setId($data['id']);
+            $user->setNome($data['nome']);
+            $user->setEmail($data['email']);
+
+            return $user;
+        } else {
+            return false;
+        }
 
     }
     public function update(Usuario $userNew){
