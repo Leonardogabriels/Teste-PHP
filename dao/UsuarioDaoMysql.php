@@ -49,10 +49,30 @@ class UsuarioDaoMysql implements UsuarioDaoRepository {
 
     }
     public function findById($id){
+        $statement = $this->pdo->prepare("SELECT * FROM usuarios WHERE id=:id");
+        $statement->bindValue(':id', $id);
+        $statement->execute();
+
+        if ($statement->rowCount() > 0) {
+            return $statement->fetch(pdo::FETCH_ASSOC);
+
+            $data = $statement->fetch();
+
+            $user = new Usuario();
+            $user->setId($data['id']);
+            $user->setNome($data['nome']);
+            $user->setEmail($data['email']);
+
+            return $user;
+        } else {
+            return false;
+        }
 
     }
+
     public function findByEmail($email) {
-        $statment = $this->pdo->prepare("INSERT INTO usuarios (nome,email) VALUES (:nome, :email)");
+
+        $statment = $this->pdo->prepare("SELECT * FROM usuarios WHERE email=:email");
         $statment->bindValue(':email', $email);
         $statment->execute();
 
@@ -71,6 +91,14 @@ class UsuarioDaoMysql implements UsuarioDaoRepository {
 
     }
     public function update(Usuario $userNew){
+
+        $statement = $this->pdo->prepare("UPDATE usuarios SET nome =:nome, email = :email");
+        $statement->bindValue(':nome', $userNew->getNome());
+        $statement->bindValue(':email', $userNew->getEmail());
+        $statement->bindValue(':id', $userNew->getId());
+        $statement->execute();
+
+        return true;
 
     }
     public function delete($id){
